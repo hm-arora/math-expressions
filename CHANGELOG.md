@@ -1,6 +1,7 @@
 ### 2.1.0 - 2020-07-31
 
 - Drop support for Dart SDK versions below 2.7.0
+- Rewrite expression parser to use a grammar-based parsing (with petitparser).
 
 ### 2.0.0 - 2020-03-08
 

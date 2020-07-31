@@ -46,6 +46,9 @@ class TestExecutor {
         set.testFunctions.forEach((k, v) {
           test(k, v);
         });
+        set.testGroups.forEach((k, v) {
+          group(k, v);
+        });
       });
     }
   }
@@ -72,5 +75,6 @@ abstract class TestSet {
    * Returns a map containing test function names and associated function calls.
    */
   //TODO Use Reflection/Mirror API once available in Dart.
-  Map<String, Function> get testFunctions;
+  Map<String, Function> get testFunctions => {};
+  Map<String, Function> get testGroups => {};
 }

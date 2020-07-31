@@ -6,6 +6,7 @@ description: >-
   numbers, vectors, and basic interval arithmetic.
 
 dependencies:
+  petitparser: ^3.1.0
   vector_math: ^2.0.0
 
 dev_dependencies:
