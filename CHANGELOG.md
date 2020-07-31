@@ -1,3 +1,7 @@
+### 2.1.0 - 2020-07-31
+
+- Drop support for Dart SDK versions below 2.7.0
+
 ### 2.0.0 - 2020-03-08
 
 - Drop support for Dart SDK versions below 2.1.1
