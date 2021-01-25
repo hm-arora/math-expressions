@@ -119,6 +119,39 @@ class Parser {
         case TokenType.SGN:
           currExpr = Sgn(exprStack.removeLast());
           break;
+        case TokenType.LESS_THAN:
+          right = exprStack.removeLast();
+          left = exprStack.removeLast();
+          currExpr = left < right;
+          break;
+        case TokenType.GREATER_THAN:
+          right = exprStack.removeLast();
+          left = exprStack.removeLast();
+          currExpr = left > right;
+          break;
+        case TokenType.GREATER_THAN_EQUALTO:
+          right = exprStack.removeLast();
+          left = exprStack.removeLast();
+          currExpr = left >= right;
+          break;
+
+        case TokenType.LESS_THAN_EQUALTO:
+          right = exprStack.removeLast();
+          left = exprStack.removeLast();
+          currExpr = left <= right;
+          break;
+
+        case TokenType.LOGICAL_OR:
+          right = exprStack.removeLast();
+          left = exprStack.removeLast();
+          currExpr = LogicalOR(left, right);
+          break;
+
+        case TokenType.LOGICAL_AND:
+          right = exprStack.removeLast();
+          left = exprStack.removeLast();
+          currExpr = LogicalAND(left, right);
+          break;
         default:
           throw FormatException('Unsupported token: $currToken');
       }
@@ -177,6 +210,10 @@ class Lexer {
     keywords['{'] = TokenType.LBRACE;
     keywords['}'] = TokenType.RBRACE;
     keywords[','] = TokenType.SEPAR;
+    keywords['<'] = TokenType.LESS_THAN;
+    keywords['>'] = TokenType.GREATER_THAN;
+    keywords['||'] = TokenType.LOGICAL_OR;
+    keywords['&&'] = TokenType.LOGICAL_AND;
   }
 
   /// Tokenizes a given input string.
@@ -488,6 +525,19 @@ class TokenType {
       TokenType._internal('POW', 4, leftAssociative: false, operator: true);
   static const TokenType UNMINUS =
       TokenType._internal('UNMINUS', 3, leftAssociative: false, operator: true);
+
+  // comparison operators
+  // static const TokenType EQUALTO = TokenType._internal('EQUALTO', 4, leftAssociative: false, operator: true);
+  // static const TokenType NOTEQUALTO = TokenType._internal('NOT_EQUALTO', 4, leftAssociative: false, operator: true);
+  static const TokenType LESS_THAN = TokenType._internal('LESS_THAN', -1, leftAssociative: false, operator: true);
+  static const TokenType GREATER_THAN = TokenType._internal('GREATER_THAN', -1, leftAssociative: false, operator: true);
+  static const TokenType GREATER_THAN_EQUALTO = TokenType._internal('GREATER_THAN_EQUALTO', -1, leftAssociative: false, operator: true);
+  static const TokenType LESS_THAN_EQUALTO = TokenType._internal('LESS_THAN_EQUALTO', -1, leftAssociative: false, operator: true);
+
+  static const TokenType LOGICAL_OR = TokenType._internal('LOGICAL_OR', -2, leftAssociative: true, operator: true);
+  static const TokenType LOGICAL_AND = TokenType._internal('LOGICAL_AND', -2, leftAssociative: true, operator: true);
+  
+
 
   // Functions
   static const TokenType SQRT = TokenType._internal('SQRT', 5, function: true);

@@ -40,6 +40,18 @@ abstract class Expression {
   /// Divide operator. Creates a [Divide] expression.
   Expression operator /(Expression exp) => Divide(this, exp);
 
+  /// Less Than operator. Creates a [LessThan] expression.
+  Expression operator <(Expression exp) => LessThan(this, exp);
+
+  /// Greater Than operator. Creates a [GreaterThan] expression.
+  Expression operator >(Expression exp) => GreaterThan(this, exp);
+
+  /// Less Than Equal to operator. Creates a [LessThanEqualTo] expression.
+  Expression operator <=(Expression exp) => LessThanEqualTo(this, exp);
+
+  /// Greater Than operator. Creates a [GreaterThanEqualTo] expression.
+  Expression operator >=(Expression exp) => GreaterThanEqualTo(this, exp);
+
   /// Modulo operator. Creates a [Modulo] expression.
   Expression operator %(Expression exp) => Modulo(this, exp);
 
@@ -932,4 +944,116 @@ class IntervalLiteral extends Literal {
   @override
   Interval getConstantValue() => Interval(
       (min as Literal).getConstantValue(), (max as Literal).getConstantValue());
+}
+
+class LessThan extends BinaryOperator {
+
+  LessThan(dynamic firstNum, dynamic secondNum) : super(firstNum, secondNum);
+
+  @override
+  Expression derive(String toVar) =>
+      LessThan(first.derive(toVar), second.derive(toVar));
+
+
+  @override
+  Expression simplify() {
+    Expression firstOp = first.simplify();
+    Expression secondOp = second.simplify();
+    return LessThan(firstOp, secondOp);
+  }
+
+  @override
+  dynamic evaluate(EvaluationType type, ContextModel context) {
+    final dynamic firstEval = first.evaluate(type, context);
+    final dynamic secondEval = second.evaluate(type, context);
+
+    return firstEval < secondEval ? 1.0 : 0.0;
+  }
+
+  @override
+  String toString() => '($first < $second)';
+}
+
+class GreaterThan extends BinaryOperator {
+
+  GreaterThan(dynamic firstNum, dynamic secondNum) : super(firstNum, secondNum);
+
+  @override
+  Expression derive(String toVar) =>
+      GreaterThan(first.derive(toVar), second.derive(toVar));
+
+
+  @override
+  Expression simplify() {
+    Expression firstOp = first.simplify();
+    Expression secondOp = second.simplify();
+    return GreaterThan(firstOp, secondOp);
+  }
+
+  @override
+  dynamic evaluate(EvaluationType type, ContextModel context) {
+    final dynamic firstEval = first.evaluate(type, context);
+    final dynamic secondEval = second.evaluate(type, context);
+
+    return firstEval > secondEval ? 1.0 : 0.0;
+  }
+
+  @override
+  String toString() => '($first > $second)';
+}
+
+class LessThanEqualTo extends BinaryOperator {
+
+  LessThanEqualTo(dynamic firstNum, dynamic secondNum) : super(firstNum, secondNum);
+
+  @override
+  Expression derive(String toVar) =>
+      LessThanEqualTo(first.derive(toVar), second.derive(toVar));
+
+
+  @override
+  Expression simplify() {
+    Expression firstOp = first.simplify();
+    Expression secondOp = second.simplify();
+    return LessThanEqualTo(firstOp, secondOp);
+  }
+
+  @override
+  dynamic evaluate(EvaluationType type, ContextModel context) {
+    final dynamic firstEval = first.evaluate(type, context);
+    final dynamic secondEval = second.evaluate(type, context);
+
+    return firstEval <= secondEval ? 1.0 : 0.0;
+  }
+
+  @override
+  String toString() => '($first <= $second)';
+}
+
+class GreaterThanEqualTo extends BinaryOperator {
+
+  GreaterThanEqualTo(dynamic firstNum, dynamic secondNum) : super(firstNum, secondNum);
+
+  @override
+  Expression derive(String toVar) =>
+      GreaterThanEqualTo(first.derive(toVar), second.derive(toVar));
+
+
+  @override
+  Expression simplify() {
+    Expression firstOp = first.simplify();
+    Expression secondOp = second.simplify();
+    return GreaterThanEqualTo(firstOp, secondOp);
+  }
+
+  @override
+  dynamic evaluate(EvaluationType type, ContextModel context) {
+    final dynamic firstEval = first.evaluate(type, context);
+    final dynamic secondEval = second.evaluate(type, context);
+
+    return firstEval >= secondEval ? 1.0 : 0.0;
+  }
+
+  @override
+  String toString() => '($first >= $second)';
 }

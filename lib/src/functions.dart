@@ -927,3 +927,39 @@ class Sgn extends DefaultFunction {
     throw UnimplementedError('Can not evaluate $name on $type yet.');
   }
 }
+
+class LogicalOR extends DefaultFunction {
+
+  LogicalOR(dynamic firstNum, dynamic secondNum) : super._binary("LogicalOR", firstNum, secondNum);
+
+  @override
+  Expression derive(String toVar) {
+    return LogicalOR(getParam(0).derive(toVar), getParam(1).derive(toVar));
+  }
+  
+  @override
+  dynamic evaluate(EvaluationType type, ContextModel context) {
+    final dynamic firstEval = getParam(0).evaluate(type, context);
+    final dynamic secondEval = getParam(1).evaluate(type, context);
+    return (firstEval != 0 || secondEval != 0) ? 1.0 : 0.0;
+  }
+
+}
+
+class LogicalAND extends DefaultFunction {
+
+  LogicalAND(dynamic firstNum, dynamic secondNum) : super._binary("logicalAND", firstNum, secondNum);
+
+  @override
+  Expression derive(String toVar) {
+    return LogicalAND(getParam(0).derive(toVar), getParam(1).derive(toVar));
+  }
+  
+  @override
+  dynamic evaluate(EvaluationType type, ContextModel context) {
+    final dynamic firstEval = getParam(0).evaluate(type, context);
+    final dynamic secondEval = getParam(1).evaluate(type, context);
+    return (firstEval != 0 && secondEval != 0) ? 1.0 : 0.0;
+  }
+
+}
