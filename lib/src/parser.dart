@@ -152,6 +152,18 @@ class Parser {
           left = exprStack.removeLast();
           currExpr = LogicalAND(left, right);
           break;
+
+        case TokenType.EQUAL:
+          right = exprStack.removeLast();
+          left = exprStack.removeLast();
+          currExpr = Equal(left, right);
+          break;
+
+        case TokenType.NOT_EQUAL:
+          right = exprStack.removeLast();
+          left = exprStack.removeLast();
+          currExpr = NotEqual(left, right);
+          break;
         default:
           throw FormatException('Unsupported token: $currToken');
       }
@@ -214,6 +226,8 @@ class Lexer {
     keywords['>'] = TokenType.GREATER_THAN;
     keywords['||'] = TokenType.LOGICAL_OR;
     keywords['&&'] = TokenType.LOGICAL_AND;
+    keywords['=='] = TokenType.EQUAL;
+    keywords['!='] = TokenType.NOT_EQUAL;
   }
 
   /// Tokenizes a given input string.
@@ -533,6 +547,8 @@ class TokenType {
   static const TokenType GREATER_THAN = TokenType._internal('GREATER_THAN', -1, leftAssociative: false, operator: true);
   static const TokenType GREATER_THAN_EQUALTO = TokenType._internal('GREATER_THAN_EQUALTO', -1, leftAssociative: false, operator: true);
   static const TokenType LESS_THAN_EQUALTO = TokenType._internal('LESS_THAN_EQUALTO', -1, leftAssociative: false, operator: true);
+  static const TokenType EQUAL = TokenType._internal('EQUAL', -1, leftAssociative: false, operator: true);
+  static const TokenType NOT_EQUAL = TokenType._internal('NOT_EQUAL', -1, leftAssociative: false, operator: true);
 
   static const TokenType LOGICAL_OR = TokenType._internal('LOGICAL_OR', -2, leftAssociative: true, operator: true);
   static const TokenType LOGICAL_AND = TokenType._internal('LOGICAL_AND', -2, leftAssociative: true, operator: true);

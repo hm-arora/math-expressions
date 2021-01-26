@@ -8,6 +8,7 @@ import 'package:math_expressions/math_expressions.dart';
 ///  - Example 3: Custom function definition and use
 void main() {
   _expression_comparison_evaluation();
+  // print();
   // _expression_creation_and_evaluation();
   // _expression_simplification_and_differentiation();
   // _custom_function_definition_and_use();
@@ -15,7 +16,7 @@ void main() {
 
 void _expression_comparison_evaluation() {
   Parser p = Parser();
-  Expression exp = p.parse('10 < 11 || 12 < 10');
+  Expression exp = p.parse('1 + 2 == 4');
   ContextModel cm = ContextModel();
   double eval = exp.evaluate(EvaluationType.REAL, cm);
   print('Expression: $exp');

@@ -963,3 +963,39 @@ class LogicalAND extends DefaultFunction {
   }
 
 }
+
+class Equal extends DefaultFunction {
+
+  Equal(dynamic firstNum, dynamic secondNum) : super._binary("Equal", firstNum, secondNum);
+
+  @override
+  Expression derive(String toVar) {
+    return Equal(getParam(0).derive(toVar), getParam(1).derive(toVar));
+  }
+  
+  @override
+  dynamic evaluate(EvaluationType type, ContextModel context) {
+    final dynamic firstEval = getParam(0).evaluate(type, context);
+    final dynamic secondEval = getParam(1).evaluate(type, context);
+    return (firstEval == secondEval) ? 1.0 : 0.0;
+  }
+
+}
+
+class NotEqual extends DefaultFunction {
+
+  NotEqual(dynamic firstNum, dynamic secondNum) : super._binary("NotEqual", firstNum, secondNum);
+
+  @override
+  Expression derive(String toVar) {
+    return NotEqual(getParam(0).derive(toVar), getParam(1).derive(toVar));
+  }
+  
+  @override
+  dynamic evaluate(EvaluationType type, ContextModel context) {
+    final dynamic firstEval = getParam(0).evaluate(type, context);
+    final dynamic secondEval = getParam(1).evaluate(type, context);
+    return (firstEval != secondEval) ? 1.0 : 0.0;
+  }
+
+}
