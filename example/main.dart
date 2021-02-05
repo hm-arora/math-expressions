@@ -7,9 +7,20 @@ import 'package:math_expressions/math_expressions.dart';
 ///  - Example 2: Expression simplification and differentiation
 ///  - Example 3: Custom function definition and use
 void main() {
-  _expression_creation_and_evaluation();
-  _expression_simplification_and_differentiation();
-  _custom_function_definition_and_use();
+  _expression_comparison_evaluation();
+  // print();
+  // _expression_creation_and_evaluation();
+  // _expression_simplification_and_differentiation();
+  // _custom_function_definition_and_use();
+}
+
+void _expression_comparison_evaluation() {
+  Parser p = Parser();
+  Expression exp = p.parse('1 + 2 == 4');
+  ContextModel cm = ContextModel();
+  double eval = exp.evaluate(EvaluationType.REAL, cm);
+  print('Expression: $exp');
+  print('Evaluated expression: $eval\n  (with context: $cm)'); //
 }
 
 /// Example 1: Expression creation and evaluation
