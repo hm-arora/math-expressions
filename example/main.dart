@@ -16,7 +16,7 @@ void main() {
 
 void _expression_comparison_evaluation() {
   Parser p = Parser();
-  Expression exp = p.parse('1 + 2 == 4');
+  Expression exp = p.parse('1 + 2 >= 4');
   ContextModel cm = ContextModel();
   double eval = exp.evaluate(EvaluationType.REAL, cm);
   print('Expression: $exp');
