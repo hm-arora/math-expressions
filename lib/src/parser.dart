@@ -230,6 +230,7 @@ class Lexer {
     keywords['&&'] = TokenType.LOGICAL_AND;
     keywords['=='] = TokenType.EQUAL;
     keywords['!='] = TokenType.NOT_EQUAL;
+    keywords["="] = TokenType.ASSIGNMENT;
   }
 
   /// Tokenizes a given input string.
@@ -268,7 +269,16 @@ class Lexer {
           // Clear varBuffer since we have nothing to add to the stream as EFUNC is already in it
           //_doVarBuffer(tempTokenStream);
           varBuffer = '';
-        } else {
+        } else if (keywords[si] == TokenType.ASSIGNMENT) {
+          if (tempTokenStream.isNotEmpty) {
+            if (tempTokenStream.last.type == TokenType.LESS_THAN) {
+              tempTokenStream[tempTokenStream.length - 1] = Token("<=", TokenType.LESS_THAN_EQUALTO);
+            } else if ((tempTokenStream.last.type == TokenType.GREATER_THAN)) {
+              tempTokenStream[tempTokenStream.length - 1] = Token(">=", TokenType.GREATER_THAN_EQUALTO);
+            }
+          }
+        }
+        else {
           // Normal behaviour
           tempTokenStream.add(Token(si, keywords[si]));
         }
@@ -551,6 +561,7 @@ class TokenType {
   static const TokenType LESS_THAN_EQUALTO = TokenType._internal('LESS_THAN_EQUALTO', -1, leftAssociative: false, operator: true);
   static const TokenType EQUAL = TokenType._internal('EQUAL', -1, leftAssociative: false, operator: true);
   static const TokenType NOT_EQUAL = TokenType._internal('NOT_EQUAL', -1, leftAssociative: false, operator: true);
+  static const TokenType ASSIGNMENT = TokenType._internal('ASSIGNMENT', -1, leftAssociative: false, operator: true);
 
   static const TokenType LOGICAL_OR = TokenType._internal('LOGICAL_OR', -2, leftAssociative: true, operator: true);
   static const TokenType LOGICAL_AND = TokenType._internal('LOGICAL_AND', -2, leftAssociative: true, operator: true);
