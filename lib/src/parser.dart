@@ -223,6 +223,8 @@ class Lexer {
     keywords['}'] = TokenType.RBRACE;
     keywords[','] = TokenType.SEPAR;
     keywords['<'] = TokenType.LESS_THAN;
+    keywords['<='] = TokenType.LESS_THAN_EQUALTO;
+    keywords['>='] = TokenType.GREATER_THAN_EQUALTO;
     keywords['>'] = TokenType.GREATER_THAN;
     keywords['||'] = TokenType.LOGICAL_OR;
     keywords['&&'] = TokenType.LOGICAL_AND;
