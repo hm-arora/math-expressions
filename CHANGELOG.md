@@ -1,3 +1,16 @@
+### 2.1.1 - 2021-05-02
+
+- Fix inaccuracies in sin/cos/tan when using math.pi (machine pi) (thanks [mbullington](https://github.com/mbullington))
+
+### 2.1.0 - 2021-03-17
+
+- Bumped to stable release.
+
+### 2.1.0-nullsafety.0 - 2021-03-12
+
+- Drop support for Dart SDK versions below 2.12.0
+- Migrate to null safety (thanks [albertodev01](https://github.com/albertodev01))
+
 ### 2.0.2 - 2021-01-08
 
 - Lower precedence of unary minus below power operator to match common

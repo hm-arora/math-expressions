@@ -18,7 +18,7 @@ abstract class MathFunction extends Expression {
   /// __Note__:
   /// Must only be used internally by subclasses, as it does not define any
   /// arguments.
-  MathFunction._empty(this.name);
+  MathFunction._empty(this.name) : args = [];
 
   /// Compose operator. Creates a [CompositeFunction].
   MathFunction operator &(MathFunction g) => CompositeFunction(this, g);
@@ -107,8 +107,8 @@ class CompositeFunction extends MathFunction {
   /// Simplifies both component functions.
   @override
   Expression simplify() {
-    final MathFunction fSimpl = f.simplify();
-    final MathFunction gSimpl = g.simplify();
+    final fSimpl = f.simplify() as MathFunction;
+    final gSimpl = g.simplify() as MathFunction;
 
     return CompositeFunction(fSimpl, gSimpl);
   }
@@ -310,7 +310,7 @@ class Exponential extends DefaultFunction {
     }
 
     if (expSimpl is Times && expSimpl.second is Ln) {
-      final Ln ln = expSimpl.second;
+      final ln = expSimpl.second as Ln;
       return Power(ln.arg, expSimpl.first); // e^(x*ln(y)) = y^x
     }
 
@@ -442,7 +442,7 @@ class Ln extends Log {
 //TODO: Allow n to be an expression?
 class Root extends DefaultFunction {
   /// N-th root.
-  int n;
+  late final int n;
 
   /// Creates the n-th root of arg.
   ///
@@ -588,6 +588,11 @@ class Sin extends DefaultFunction {
     final dynamic argEval = arg.evaluate(type, context);
 
     if (type == EvaluationType.REAL) {
+      // Compensate for inaccuracies in machine-pi.
+      // If argEval divides cleanly from pi, return 0.
+      if ((argEval / math.pi).abs() % 1 == 0) {
+        return 0.0;
+      }
       return math.sin(argEval);
     }
 
@@ -634,6 +639,12 @@ class Cos extends DefaultFunction {
     final dynamic argEval = arg.evaluate(type, context);
 
     if (type == EvaluationType.REAL) {
+      // Compensate for inaccuracies in machine-pi.
+      //
+      // If argEval divides cleanly from pi (when shifted back to Sin from Cos), return 0.
+      if (((argEval - math.pi / 2) / math.pi).abs() % 1 == 0) {
+        return 0.0;
+      }
       return math.cos(argEval);
     }
 
@@ -680,6 +691,11 @@ class Tan extends DefaultFunction {
     final dynamic argEval = arg.evaluate(type, context);
 
     if (type == EvaluationType.REAL) {
+      // Compensate for inaccuracies in machine-pi.
+      // If argEval divides cleanly from pi, return 0.
+      if ((argEval / math.pi).abs() % 1 == 0) {
+        return 0.0;
+      }
       return math.tan(argEval);
     }
 
