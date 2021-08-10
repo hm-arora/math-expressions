@@ -230,7 +230,7 @@ class Lexer {
     keywords['&&'] = TokenType.LOGICAL_AND;
     keywords['=='] = TokenType.EQUAL;
     keywords['!='] = TokenType.NOT_EQUAL;
-    keywords["="] = TokenType.ASSIGNMENT;
+    keywords['='] = TokenType.ASSIGNMENT;
   }
 
   /// Tokenizes a given input string.
@@ -272,13 +272,16 @@ class Lexer {
         } else if (keywords[si] == TokenType.ASSIGNMENT) {
           if (tempTokenStream.isNotEmpty) {
             if (tempTokenStream.last.type == TokenType.LESS_THAN) {
-              tempTokenStream[tempTokenStream.length - 1] = Token("<=", TokenType.LESS_THAN_EQUALTO);
+              tempTokenStream[tempTokenStream.length - 1] = Token('<=', TokenType.LESS_THAN_EQUALTO);
             } else if ((tempTokenStream.last.type == TokenType.GREATER_THAN)) {
-              tempTokenStream[tempTokenStream.length - 1] = Token(">=", TokenType.GREATER_THAN_EQUALTO);
+              tempTokenStream[tempTokenStream.length - 1] = Token('>=', TokenType.GREATER_THAN_EQUALTO);
+            } else if ((tempTokenStream.last.type == TokenType.ASSIGNMENT)) {
+              tempTokenStream[tempTokenStream.length - 1] = Token('==', TokenType.EQUAL);
+            } else {
+              tempTokenStream.add(Token(si, keywords[si]!));
             }
           }
-        }
-        else {
+        } else {
           // Normal behaviour
           tempTokenStream.add(Token(si, keywords[si]!));
         }
