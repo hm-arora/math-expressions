@@ -251,8 +251,12 @@ class Plus extends BinaryOperator {
   }
 
   @override
-  dynamic evaluate(EvaluationType type, ContextModel context) =>
-      first.evaluate(type, context) + second.evaluate(type, context);
+  dynamic evaluate(EvaluationType type, ContextModel context) {
+    dynamic input = first.evaluate(type, context) + second.evaluate(type, context);
+    double doubleInput = double.parse(input.toString());
+    double val = Utils.getValueUptoSpecificDecimals(doubleInput, 12);
+    return val;
+  }
 
   @override
   String toString() => '($first + $second)';
@@ -303,8 +307,12 @@ class Minus extends BinaryOperator {
   }
 
   @override
-  dynamic evaluate(EvaluationType type, ContextModel context) =>
-      first.evaluate(type, context) - second.evaluate(type, context);
+  dynamic evaluate(EvaluationType type, ContextModel context) {
+    dynamic input = first.evaluate(type, context) - second.evaluate(type, context);
+    double doubleInput = double.parse(input.toString());
+    double val = Utils.getValueUptoSpecificDecimals(doubleInput, 12);
+    return val;
+  }
 
   @override
   String toString() => '($first - $second)';

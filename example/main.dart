@@ -16,7 +16,7 @@ void main() {
 
 void _expression_comparison_evaluation() {
   Parser p = Parser();
-  Expression exp = p.parse('34==34');
+  Expression exp = p.parse("10.45-1.525");
   ContextModel cm = ContextModel();
   double eval = exp.evaluate(EvaluationType.REAL, cm);
   print('Expression: $exp');
